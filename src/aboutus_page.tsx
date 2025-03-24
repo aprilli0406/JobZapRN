@@ -14,7 +14,7 @@ const AboutUsScreen = () => {
       return;
     }
 
-    Alert.alert("Success", "Thanks for reaching out! Our team will respond to you within 3 business days.");
+    Alert.alert("Success", "Thanks for reaching out! Our team will respond to you as soon as we can.");
     setFirstName("");
     setLastName("");
     setEmail("");

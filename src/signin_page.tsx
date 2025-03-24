@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
+  ForgotCredentials: undefined; // added ForgotCredntials page
 };
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, "Login">;
@@ -42,6 +43,12 @@ const LoginScreen = () => {
       {/* ✅ Login Button */}
       <Button title="Login" onPress={handleLogin} />
 
+    {/* ✅ Forgot Credentials Button */}
+    <TouchableOpacity onPress={() => navigation.navigate("ForgotCredentials")}>
+        <Text style={styles.forgotText}>Forgot Username/Password?</Text>
+      </TouchableOpacity>
+
+
       {/* ✅ Sign-Up Button (Correctly Positioned) */}
       <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
         <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
@@ -55,6 +62,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "center", alignItems: "center", padding: 20 },
   title: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
   input: { width: "100%", borderWidth: 1, borderColor: "#ccc", padding: 10, marginBottom: 10, borderRadius: 5 },
+  forgotText: { textAlign: "center", marginTop: 10, color: "red", fontSize: 16, fontWeight: "bold" }, // added forgotText style
   signupText: { textAlign: "center", marginTop: 15, color: "blue", fontSize: 16, fontWeight: "bold" },
 });
 

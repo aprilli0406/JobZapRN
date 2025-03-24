@@ -10,6 +10,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import SignUpScreen from "./src/signup_page";
 import LoginScreen from "./src/signin_page"; // Import your login screen
+import ForgotCredentialsScreen from "./src/ForgotCredentialsScreen";  // ✅ Import
 
 
 Amplify.configure({
@@ -22,6 +23,7 @@ Amplify.configure({
 type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
+  ForgotCredentials: undefined;
 };
 
 // ✅ Create the Stack Navigator
@@ -33,6 +35,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
+        <Stack.Screen name="ForgotCredentials" component={ForgotCredentialsScreen} />  //Added ForgotCredentials
       </Stack.Navigator>
     </NavigationContainer>
   );
