@@ -8,9 +8,6 @@ import { signOut } from 'aws-amplify/auth';
 
 import { RootStackParamList } from "../App";
 
-// ✅ Define Navigation Type
-
-
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, "Login">;
 
 const LoginScreen = () => {
@@ -19,7 +16,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
 
   async function handleSignin() {
-    Alert.alert("It works", "This is a hardcoded test.");
+    
     try {
       await signOut({ global: true });//log out before sign in 
       
@@ -36,6 +33,7 @@ const LoginScreen = () => {
       console.log('nextStep', nextStep);
 
       if (isSignedIn && nextStep.signInStep === 'DONE') {
+        Alert.alert("Go To Log In~");
         navigation.navigate("SearchScreen");
       } else {
         Alert.alert("Login Info", `Next step: ${nextStep.signInStep}`);
@@ -62,7 +60,6 @@ const LoginScreen = () => {
 
     {/* ✅ Login Button */}
     <Button title="Login" onPress={handleSignin} />
-
 
     {/* ✅ Sign-Up Button (Correctly Positioned) */}
       <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
