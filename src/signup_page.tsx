@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { View, Text, TextInput, Button, Alert, StyleSheet } from "react-native";
-import { signUp } from "@aws-amplify/auth";
+import { signUp, signIn } from "@aws-amplify/auth";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack"; // ✅ Import this!
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
+
 type RootStackParamList = {
     Login: undefined;
     SignUp: undefined;
+    SearchScreen: undefined;
   };
   
   type SignUpScreenNavigationProp = StackNavigationProp<RootStackParamList, "SignUp">;
@@ -41,22 +43,26 @@ type RootStackParamList = {
           password,
           options: {
             userAttributes: {
-              email,
+              email: email,
               given_name: firstName,
               family_name: lastName,
+              
             },
           },
         });
-  
-        Alert.alert("Success", "Account created! Please log in.");
-        navigation.navigate("Login"); // ✅ Redirect to Login Screen
+        Alert.alert("Success", "Account created! ");
+         // 2. Immediately sign in the user
+        
+
+        Alert.alert("Auto logged in~");
+        
+        navigation.navigate("SearchScreen"); // ✅ Redirect to Login Screen
+
       } catch (error: unknown) {
-        if (error instanceof Error) {
-          Alert.alert("Signup Failed", error.message);
-        } else {
-          Alert.alert("Signup Failed", "An unknown error occurred");
-        }
-      } finally {
+        Alert.alert("sign up failed!!!");
+        console.error("Signup error:", error);
+      }
+      finally {
         setLoading(false);
       }
     };

@@ -10,7 +10,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import SignUpScreen from "./src/signup_page";
 import LoginScreen from "./src/signin_page"; // Import your login screen
-
+import SearchScreen from "./src/search_page";
 
 Amplify.configure({
   ...awsExports,
@@ -19,9 +19,10 @@ Amplify.configure({
 
 
 // ✅ Define screen names and types
-type RootStackParamList = {
+export type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
+  SearchScreen: undefined;
 };
 
 // ✅ Create the Stack Navigator
@@ -33,6 +34,8 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
+        <Stack.Screen name="SearchScreen" component={SearchScreen} />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
