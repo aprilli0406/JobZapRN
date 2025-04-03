@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/companies": {
+      "name": "/companies",
+      "lambdaFunction": "companySearchHandler",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

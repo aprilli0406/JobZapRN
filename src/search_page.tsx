@@ -1,73 +1,97 @@
-import React, { useState } from "react";
-import { View, TextInput, FlatList, Text, StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
+import React, { useState, useEffect } from 'react';
+import { TextInput, View, FlatList, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from "../App";
 
-interface Company {
-  id: string;
+type CompanyResult = {
+  domain: string;
   name: string;
-}
+  logo: string;
+};
 
-const SearchScreen = () => {
-    
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [filteredResults, setFilteredResults] = useState<Company[]>([]);
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'SearchScreen'>;// outside and before the function
 
-  const data: Company[] = [
-    { id: "1", name: "Google" },
-    { id: "2", name: "Microsoft" },
-    { id: "3", name: "Amazon" },
-    { id: "4", name: "Alibaba" },
-  ];
+// function
+const CompanySearch = () => {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState<CompanyResult[]>([]);
+  
+  //navigation part
+  const navigation = useNavigation<NavigationProp>();// navigator needed inside the function 
+  
 
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-    const results: Company[] = query
-      ? data.filter((item) =>
-          item.name.toLowerCase().includes(query.toLowerCase())
-        )
-      : data;
+  useEffect(() => {
+    if (query.length === 0) {
+      setResults([]);
+      return;
+    }
 
-    setFilteredResults(results);
-  };
+    const fetchResults = async () => {
+      try {
+        const response = await fetch(`https://lhtlrjyqdg.execute-api.us-east-1.amazonaws.com/dev/companies?search=google`);
+
+        const data = await response.json();
+        setResults(data);
+      } catch (error) {
+        console.error('Search error:', error);
+        setResults([]);
+      }
+    };
+
+    fetchResults();
+  }, [query]);
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={styles.container}>
-        <TextInput
-          style={styles.searchBar}
-          placeholder="Search for a tech company..."
-          value={searchQuery}
-          onChangeText={handleSearch}
-        />
-        <FlatList
-          data={filteredResults.length > 0 ? filteredResults : data}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <Text style={styles.resultItem}>{item.name}</Text>}
-        />
-      </View>
-    </TouchableWithoutFeedback>
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        placeholder="Search companies..."
+        value={query}
+        onChangeText={setQuery}
+      />
+
+      <FlatList
+        data={results}
+        keyExtractor={(item) => item.domain}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => navigation.navigate('CompanyInfo', item)}>  
+            <View style={styles.resultItem}>
+              <Image source={{ uri: item.logo }} style={styles.logo} />
+              <Text style={styles.resultText}>{item.name}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: "#fff",
-  },
-  searchBar: {
-    height: 40,
-    borderColor: "gray",
+  container: { padding: 16 },
+  input: {
     borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    marginBottom: 10,
+    borderColor: '#ccc',
+    padding: 12,
+    borderRadius: 6,
+    marginBottom: 8,
   },
   resultItem: {
-    padding: 10,
-    fontSize: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
+    borderBottomColor: '#eee',
+  },
+  logo: {
+    width: 30,
+    height: 30,
+    marginRight: 10,
+    borderRadius: 5,
+  },
+  resultText: {
+    fontSize: 16,
   },
 });
 
-export default SearchScreen; // ✅ Ensure default export
+export default CompanySearch;

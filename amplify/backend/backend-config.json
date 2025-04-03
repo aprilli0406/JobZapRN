@@ -1,4 +1,20 @@
 {
+  "api": {
+    "apilookcompany": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "companySearchHandler"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
   "auth": {
     "testapprn0a330a06": {
       "customAuth": false,
@@ -25,6 +41,31 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "function": {
+    "companySearchHandler": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_companySearchHandler_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "companySearchHandler"
+        }
+      ]
+    },
+    "AMPLIFY_function_companySearchHandler_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "companySearchHandler"
+        }
+      ]
     }
   }
 }

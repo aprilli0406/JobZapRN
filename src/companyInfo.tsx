@@ -1,0 +1,71 @@
+import React from 'react';
+import { View, Text, StyleSheet, Image, Button, Alert } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '../App';
+
+type CompanyInfoRouteProp = RouteProp<RootStackParamList, 'CompanyInfo'>;
+
+const CompanyInfoScreen = () => {
+  const route = useRoute<CompanyInfoRouteProp>();
+  const { name, logo, domain } = route.params;
+
+  const handleAddToFavorites = async () => {
+    try {
+      const response = await fetch('https://9imynsker8.execute-api.us-east-1.amazonaws.com/AddToFavorites', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, domain }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        Alert.alert('Success', `${name} was added to your favorites.`);
+      } else {
+        Alert.alert('Error', data.message || 'Could not add to favorites.');
+      }
+    } catch (error) {
+      console.error('Add to favorites error:', error);
+      Alert.alert('Error', 'Something went wrong.');
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Image source={{ uri: logo }} style={styles.logo} />
+      <Text style={styles.name}>{name}</Text>
+      <Text style={styles.domain}>{domain}</Text>
+      <Button title="Add to Favorites" onPress={handleAddToFavorites} /> {/* ✅ added this */}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    flex: 1,
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  name: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  domain: {
+    fontSize: 16,
+    color: 'gray',
+    marginTop: 10,
+    marginBottom: 20,
+  },
+});
+
+export default CompanyInfoScreen;

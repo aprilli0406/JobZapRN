@@ -18,6 +18,7 @@ const LoginScreen = () => {
   async function handleSignin() {
     
     try {
+      Alert.alert("34343");
       await signOut({ global: true });//log out before sign in 
       
       const { isSignedIn, nextStep } = await signIn({ 
@@ -33,7 +34,7 @@ const LoginScreen = () => {
       console.log('nextStep', nextStep);
 
       if (isSignedIn && nextStep.signInStep === 'DONE') {
-        Alert.alert("Go To Log In~");
+        
         navigation.navigate("SearchScreen");
       } else {
         Alert.alert("Login Info", `Next step: ${nextStep.signInStep}`);

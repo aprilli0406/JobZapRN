@@ -9,11 +9,21 @@
       "UnauthRoleName": "amplify-testapprn-dev-3de0d-unauthRole",
       "StackName": "amplify-testapprn-dev-3de0d",
       "StackId": "arn:aws:cloudformation:us-east-1:600627352789:stack/amplify-testapprn-dev-3de0d/441fca00-faea-11ef-a1a1-0affd00399c1",
-      "AmplifyAppId": "dau7ltjf4mxf1"
+      "AmplifyAppId": "dau7ltjf4mxf1",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-testapprn-dev-3de0d-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {
         "testapprn0a330a06": {}
+      },
+      "function": {
+        "companySearchHandler": {
+          "deploymentBucketName": "amplify-testapprn-dev-3de0d-deployment",
+          "s3Key": "amplify-builds/companySearchHandler-32456c4474415470386e-build.zip"
+        }
+      },
+      "api": {
+        "apilookcompany": {}
       }
     }
   }
