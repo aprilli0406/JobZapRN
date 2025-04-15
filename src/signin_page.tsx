@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button, Alert, StyleSheet, TouchableOpacity } fr
 import { signIn, SignInInput } from "@aws-amplify/auth";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { signOut } from 'aws-amplify/auth';
 
 import { RootStackParamList } from "../App";
@@ -99,7 +99,7 @@ async function handleTestLogin() {
     {/* Test Login Button */}
     <Button title="Test Login" onPress={handleTestLogin} />
 
-    {/* Sign-Up Button (Correctly Positioned) */}
+    {/* Sign-Up Button  */}
       <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
         <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
       </TouchableOpacity>

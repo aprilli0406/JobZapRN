@@ -1,27 +1,55 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, Button, Alert } from 'react-native';
+import React, { useEffect, useState, useLayoutEffect} from 'react';
+import { View, Text, StyleSheet, Image, Button, Alert, Linking } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 import { fetchAuthSession, getCurrentUser } from 'aws-amplify/auth';
+import { useNavigation} from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native';
+
+import { StackNavigationProp } from "@react-navigation/stack";
+
+type Job = {
+  job_title: string;
+  employer_name: string;
+  job_city: string;
+  job_apply_link: string;
+};
+type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, "Login">;
 
 
+type CompanyInfoNavigationProp = StackNavigationProp<RootStackParamList, 'CompanyInfo'>;
 type CompanyInfoRouteProp = RouteProp<RootStackParamList, 'CompanyInfo'>;
 
+
+
 const CompanyInfoScreen = () => {
+  const navigation = useNavigation<CompanyInfoNavigationProp>();
   const route = useRoute<CompanyInfoRouteProp>();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={() => navigation.navigate('CompanyManage')}>
+          <Text style={{ color: 'blue', marginRight: 15 }}>Manage My Companies</Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
+
 
   const { name = '', logo = '', domain = '' } = route.params || {};
 
-  //  need userId for the 'favorite company' table, so we need to get the userID through Cognito
+  const [jobs, setJobs] = useState<Job[]>([]);
+
+  //  Get Cognito user ID
   const getUserId = async (): Promise<string | null> => {
     try {
-      const user = await getCurrentUser(); // basic info
-      const session = await fetchAuthSession(); // contains full ID token
+      const user = await getCurrentUser(); // basic user info
+      const session = await fetchAuthSession(); // full ID token
       const userId = session.tokens?.idToken?.payload?.sub;
 
       if (!userId) throw new Error('User ID not found in token payload');
-
       return userId;
     } catch (err) {
       console.error('Failed to get user ID:', err);
@@ -29,17 +57,46 @@ const CompanyInfoScreen = () => {
     }
   };
 
-  
+  // Fetch latest job postings
+  const fetchLatestJobs = async (companyName: string) => {
+    try {
+      const response = await fetch(
+        `https://jsearch.p.rapidapi.com/search?query=${encodeURIComponent(companyName)}&page=1&num_pages=1`,
+        {
+          method: 'GET',
+          headers: {
+            'X-RapidAPI-Key': '103aab4bd6mshca6469e1238f718p1828b7jsn19889daadf73',
+            'X-RapidAPI-Host': 'jsearch.p.rapidapi.com',
+          },
+        }
+      );
 
+      const data = await response.json();
+      return data.data || [];
+    } catch (error) {
+      console.error('Job fetch error:', error);
+      return [];
+    }
+  };
+
+  //  Load jobs on mount
+  useEffect(() => {
+    const loadJobs = async () => {
+      const jobResults = await fetchLatestJobs(name);
+      setJobs(jobResults);
+    };
+
+    if (name) loadJobs();
+  }, [name]);
+
+  // Add company to favorites
   const handleAddToFavorites = async () => {
     try {
-      // call funtion getUserId()
       const userId = await getUserId();
       if (!userId) {
         Alert.alert('Error', 'Unable to get user ID. Please log in.');
         return;
       }
-
 
       const response = await fetch('https://9imynsker8.execute-api.us-east-1.amazonaws.com/AddToFavorites', {
         method: 'POST',
@@ -65,13 +122,28 @@ const CompanyInfoScreen = () => {
   return (
     <View style={styles.container}>
       <Image source={{ uri: logo }} style={styles.logo} />
-      <Text>{String(name)}</Text>
-      <Text>{String(domain)}</Text>
-      <Button
-        title="Add to Favorites"  // This works because the built-in Button handles text internally
-        onPress={handleAddToFavorites}
-      />
+      <Text style={styles.name}>{String(name)}</Text>
+      <Text style={styles.domain}>{String(domain)}</Text>
+
+      <Button title="Add to Favorites" onPress={handleAddToFavorites} />
       
+
+      {/* Show most recent job posting */}
+      {jobs.length > 0 && (
+        <View style={styles.jobContainer}>
+          <Text style={styles.jobTitle}>Recent Job Opening:</Text>
+          <Text style={styles.jobText}>{jobs[0].job_title}</Text>
+          <Text style={styles.jobText}>
+            {jobs[0].employer_name} – {jobs[0].job_city}
+          </Text>
+          <Text
+            style={styles.applyLink}
+            onPress={() => Linking.openURL(jobs[0].job_apply_link)}
+          >
+            Apply Here
+          </Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -98,6 +170,26 @@ const styles = StyleSheet.create({
     color: 'gray',
     marginTop: 10,
     marginBottom: 20,
+  },
+  jobContainer: {
+    marginTop: 30,
+    width: '100%',
+    borderTopWidth: 1,
+    borderColor: '#ccc',
+    paddingTop: 20,
+  },
+  jobTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  jobText: {
+    fontSize: 16,
+    marginTop: 5,
+  },
+  applyLink: {
+    color: 'blue',
+    marginTop: 8,
+    textDecorationLine: 'underline',
   },
 });
 
