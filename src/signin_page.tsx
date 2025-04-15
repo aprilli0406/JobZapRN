@@ -18,7 +18,7 @@ const LoginScreen = () => {
   async function handleSignin() {
     
     try {
-      Alert.alert("34343");
+      
       await signOut({ global: true });//log out before sign in 
       
       const { isSignedIn, nextStep } = await signIn({ 
@@ -40,7 +40,7 @@ const LoginScreen = () => {
         Alert.alert("Login Info", `Next step: ${nextStep.signInStep}`);
       }
   } catch (error: any) {
-    console.log("🔥 Error signing in:", error);
+    console.log("Error signing in:", error);
   
     const title = error?.name || "Login Failed";
     const message = error?.message || error?.underlyingError?.message || "Something went wrong.";
@@ -49,6 +49,40 @@ const LoginScreen = () => {
   }
   
 }
+//test login 
+async function handleTestLogin() {
+  try {
+    await signOut({ global: true }); // Make sure user is signed out
+
+    const { isSignedIn, nextStep } = await signIn({
+      username: "tt09@gmail.com",
+      password: "Lyy2345@",
+      options: {
+        authFlowType: "USER_PASSWORD_AUTH"
+      }
+    });
+
+    Alert.alert("Test Login Successful!");
+    console.log('isSignedIn', isSignedIn);
+    console.log('nextStep', nextStep);
+
+    if (isSignedIn && nextStep.signInStep === "DONE") {
+      navigation.navigate("SearchScreen");
+    } else {
+      Alert.alert("Login Info", `Next step: ${nextStep.signInStep}`);
+    }
+
+  } catch (error: any) {
+    console.log("Error signing in:", error);
+  
+    const title = error?.name || "Login Failed";
+    const message = error?.message || error?.underlyingError?.message || "Something went wrong.";
+  
+    Alert.alert(title, message);
+  }
+}
+
+
 
 
   return (
@@ -59,10 +93,13 @@ const LoginScreen = () => {
       <TextInput style={styles.input} placeholder="Email" onChangeText={setEmail} />
       <TextInput style={styles.input} placeholder="Password" secureTextEntry onChangeText={setPassword} />
 
-    {/* ✅ Login Button */}
+    {/* Login Button */}
     <Button title="Login" onPress={handleSignin} />
 
-    {/* ✅ Sign-Up Button (Correctly Positioned) */}
+    {/* Test Login Button */}
+    <Button title="Test Login" onPress={handleTestLogin} />
+
+    {/* Sign-Up Button (Correctly Positioned) */}
       <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
         <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
       </TouchableOpacity>
@@ -79,3 +116,4 @@ const styles = StyleSheet.create({
 });
 
 export default LoginScreen;
+

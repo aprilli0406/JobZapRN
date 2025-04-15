@@ -55,7 +55,12 @@ const CompanySearch = () => {
         data={results}
         keyExtractor={(item) => item.domain}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.navigate('CompanyInfo', item)}>  
+          <TouchableOpacity onPress={() => navigation.navigate(
+            'CompanyInfo', {
+              name: item.name,
+              logo: item.logo,
+              domain: item.domain,
+          })}>  
             <View style={styles.resultItem}>
               <Image source={{ uri: item.logo }} style={styles.logo} />
               <Text style={styles.resultText}>{item.name}</Text>
