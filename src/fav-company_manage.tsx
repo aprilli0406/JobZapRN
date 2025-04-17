@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   StyleSheet,
   Alert,
+  Pressable,
 } from 'react-native';
 
 interface FavoriteCompany {
@@ -40,6 +41,27 @@ const CompanyManageScreen = () => {
     fetchFavorites();
   }, []);
 
+  const handleRemove = async (domain: string, userId: string) => {
+    try {
+      const res = await fetch(
+        `${API_URL}?domain=${domain}&userId=${userId}`,
+        {
+          method: 'DELETE',
+        }
+      );
+
+      if (!res.ok) throw new Error(`Delete failed: ${res.status}`);
+
+      // Remove item from state
+      setFavorites((prev) =>
+        prev.filter((item) => !(item.domain === domain && item.userId === userId))
+      );
+    } catch (err: any) {
+      console.error(err);
+      Alert.alert('@ Error', 'Could not delete favorite');
+    }
+  };
+
   if (loading) {
     return (
       <View style={styles.center}>
@@ -67,12 +89,19 @@ const CompanyManageScreen = () => {
         <FlatList
           data={favorites}
           keyExtractor={(item) => `${item.domain}-${item.userId}`}
+
           renderItem={({ item }) => (
             <View style={styles.card}>
-              <Text style={styles.domain}>{item.domain}</Text>
-              <Text style={styles.userId}>User ID: {item.userId}</Text>
+              <View style={styles.row}>
+                <Text style={styles.domain}>{item.domain}</Text>
+                <Pressable onPress={() => handleRemove(item.domain, item.userId)}>
+                  <Text style={styles.remove}>❌ Remove</Text>
+                </Pressable>
+              </View>
             </View>
           )}
+          
+
           ItemSeparatorComponent={() => <View style={styles.separator} />}
         />
       )}
@@ -107,10 +136,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  userId: {
-    fontSize: 14,
-    color: '#444',
-    marginTop: 4,
+  remove: {
+    color: 'red',
+    marginTop: 10,
+    fontWeight: '600',
   },
   separator: {
     height: 12,
@@ -124,5 +153,10 @@ const styles = StyleSheet.create({
   error: {
     color: 'red',
     fontSize: 16,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
