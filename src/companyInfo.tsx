@@ -109,7 +109,8 @@ const CompanyInfoScreen = () => {
       const data = await response.json();
 
       if (response.ok) {
-        Alert.alert('Success', `${domain} was added to your favorites.`);
+        Alert.alert('Success', `We're now checking job postings for ${domain}. You’ll receive an email confirmation shortly!`);
+
       } else {
         Alert.alert('Error', data.message || 'Could not add to favorites.');
       }

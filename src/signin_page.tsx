@@ -85,35 +85,37 @@ async function handleTestLogin() {
 
 
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
 
-      {/* ✅ Input Fields */}
-      <TextInput style={styles.input} placeholder="Email" onChangeText={setEmail} />
-      <TextInput style={styles.input} placeholder="Password" secureTextEntry onChangeText={setPassword} />
 
-    {/* Login Button */}
-    <Button title="Login" onPress={handleSignin} />
 
-    {/* Test Login Button */}
-    <Button title="Test Login" onPress={handleTestLogin} />
+return (
+  <View style={styles.container}>
+    <Text style={styles.title}>Login</Text>
 
-    {/* Sign-Up Button  */}
-      <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-        <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
-      </TouchableOpacity>
-    </View>
-  );
+    {/* ✅ Input Fields */}
+    <TextInput style={styles.input} placeholder="Email" onChangeText={setEmail} />
+    <TextInput style={styles.input} placeholder="Password" secureTextEntry onChangeText={setPassword} />
+
+  {/* Login Button */}
+  <Button title="Login" onPress={handleSignin} />
+
+  {/* Test Login Button */}
+  <Button title="Test Login" onPress={handleTestLogin} />
+
+  {/* Sign-Up Button  */}
+    <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+      <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
+    </TouchableOpacity>
+  </View>
+);
 };
 
 // ✅ Improved Styling for Correct Button Placement
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center", padding: 20 },
-  title: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
-  input: { width: "100%", borderWidth: 1, borderColor: "#ccc", padding: 10, marginBottom: 10, borderRadius: 5 },
-  signupText: { textAlign: "center", marginTop: 15, color: "blue", fontSize: 16, fontWeight: "bold" },
+container: { flex: 1, justifyContent: "center", alignItems: "center", padding: 20 },
+title: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
+input: { width: "100%", borderWidth: 1, borderColor: "#ccc", padding: 10, marginBottom: 10, borderRadius: 5 },
+signupText: { textAlign: "center", marginTop: 15, color: "blue", fontSize: 16, fontWeight: "bold" },
 });
-
 export default LoginScreen;
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextInput, View, FlatList, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { TextInput, View,Button, FlatList, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from "../App";
@@ -13,7 +13,7 @@ type CompanyResult = {
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'SearchScreen'>;// outside and before the function
 
 // function
-const CompanySearch = () => {
+const SearchScreen = () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<CompanyResult[]>([]);
   
@@ -68,6 +68,10 @@ const CompanySearch = () => {
           </TouchableOpacity>
         )}
       />
+      <Button
+        title="Manage My Account"
+        onPress={() => navigation.navigate('UserManage')}
+      />
     </View>
   );
 };
@@ -99,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CompanySearch;
+export default SearchScreen;

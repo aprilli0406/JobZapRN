@@ -14,6 +14,7 @@ import LoginScreen from "./src/signin_page"; // Import your login screen
 import SearchScreen from "./src/search_page";
 import CompanyInfoScreen from "./src/companyInfo"//React components must start with a capital letter, and so should their imports.
 import CompanyManageScreen from "./src/fav-company_manage"
+import UserManageScreen from  "./src/user_manage"
 
 Amplify.configure({
   ...awsExports,
@@ -32,6 +33,7 @@ export type RootStackParamList = {
     domain: string;
   };
   CompanyManage: undefined;
+  UserManage: undefined;
 };
 
 // Create the Stack Navigator
@@ -41,12 +43,17 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="SearchScreen" component={SearchScreen} />
         <Stack.Screen name="CompanyInfo" component={CompanyInfoScreen} />
         <Stack.Screen name="CompanyManage" component={CompanyManageScreen} />
+        <Stack.Screen name="UserManage" component={UserManageScreen} />
+        
       </Stack.Navigator>
+      console.log("🧭 Screens registered:");
+
     </NavigationContainer>
   );
 }
