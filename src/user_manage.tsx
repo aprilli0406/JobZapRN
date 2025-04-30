@@ -1,19 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
-  TextInput,
-  Button,
-  FlatList,
   Text,
   StyleSheet,
-  Linking,
-  ScrollView,
 } from 'react-native';
 
+const UserManageScreen = () => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>User Management (Coming Soon)</Text>
+    </View>
+  );
+};
 
-  
-  const UserManageScreen = () => {
-    
-  };
-  
-  export default UserManageScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#007aff",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+});
+
+export default UserManageScreen;

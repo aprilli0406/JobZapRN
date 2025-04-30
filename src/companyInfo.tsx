@@ -97,7 +97,7 @@ const CompanyInfoScreen = () => {
         Alert.alert('Error', 'Unable to get user ID. Please log in.');
         return;
       }
-
+  
       const response = await fetch('https://9imynsker8.execute-api.us-east-1.amazonaws.com/AddToFavorites', {
         method: 'POST',
         headers: {
@@ -105,48 +105,51 @@ const CompanyInfoScreen = () => {
         },
         body: JSON.stringify({ userId, domain }),
       });
-
-      const data = await response.json();
-
+  
+      let data = null;
+      try {
+        data = await response.json();
+      } catch (err) {
+        // do nothing. the response might be empty which is okay
+      }
+  
       if (response.ok) {
         Alert.alert('Success', `We're now checking job postings for ${domain}. You’ll receive an email confirmation shortly!`);
-
       } else {
-        Alert.alert('Error', data.message || 'Could not add to favorites.');
+        Alert.alert('Error', data?.message || 'Could not add to favorites.');
       }
     } catch (error) {
-      console.error('Add to favorites error:', error);
       Alert.alert('Error', 'Something went wrong.');
     }
-  };
-
+  };  
   return (
-    <View style={styles.container}>
-      <Image source={{ uri: logo }} style={styles.logo} />
-      <Text style={styles.name}>{String(name)}</Text>
-      <Text style={styles.domain}>{String(domain)}</Text>
-
-      <Button title="Add to Favorites" onPress={handleAddToFavorites} />
-      
-
-      {/* Show most recent job posting */}
-      {jobs.length > 0 && (
-        <View style={styles.jobContainer}>
-          <Text style={styles.jobTitle}>Recent Job Opening:</Text>
-          <Text style={styles.jobText}>{jobs[0].job_title}</Text>
-          <Text style={styles.jobText}>
-            {jobs[0].employer_name} – {jobs[0].job_city}
-          </Text>
-          <Text
-            style={styles.applyLink}
-            onPress={() => Linking.openURL(jobs[0].job_apply_link)}
-          >
-            Apply Here
-          </Text>
-        </View>
-      )}
+    <View style={styles.outer}>
+      <View style={styles.card}>
+        <Image source={{ uri: logo }} style={styles.logo} />
+        <Text style={styles.name}>{String(name)}</Text>
+        <Text style={styles.domain}>{String(domain)}</Text>
+  
+        <Button title="Add to Favorites" onPress={handleAddToFavorites} />
+  
+        {jobs.length > 0 && (
+          <View style={styles.jobContainer}>
+            <Text style={styles.jobTitle}>Recent Job Opening:</Text>
+            <Text style={styles.jobText}>{jobs[0].job_title}</Text>
+            <Text style={styles.jobText}>
+              {jobs[0].employer_name} – {jobs[0].job_city}
+            </Text>
+            <Text
+              style={styles.applyLink}
+              onPress={() => Linking.openURL(jobs[0].job_apply_link)}
+            >
+              Apply Here
+            </Text>
+          </View>
+        )}
+      </View>
     </View>
   );
+  
 };
 
 const styles = StyleSheet.create({
@@ -191,6 +194,25 @@ const styles = StyleSheet.create({
     color: 'blue',
     marginTop: 8,
     textDecorationLine: 'underline',
+  },
+   outer: {
+  flex: 1,
+  backgroundColor: "#007aff",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: 20,
+},
+card: {
+  flex: 1,
+  backgroundColor: "#fff",
+  padding: 25,
+  borderRadius: 20,
+  width: "100%",
+  alignItems: "center",
+  shadowColor: "#000",
+  shadowOpacity: 0.2,
+  shadowRadius: 10,
+  elevation: 10,
   },
 });
 

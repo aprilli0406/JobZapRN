@@ -80,66 +80,74 @@ const CompanyManageScreen = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>My Favorite Companies</Text>
-
-      {favorites.length === 0 ? (
-        <Text style={styles.empty}>You don't have any favorites yet.</Text>
-      ) : (
-        <FlatList
-          data={favorites}
-          keyExtractor={(item) => `${item.domain}-${item.userId}`}
-
-          renderItem={({ item }) => (
-            <View style={styles.card}>
-              <View style={styles.row}>
+    <View style={styles.outer}>
+      <View style={styles.card}>
+        <Text style={styles.title}>My Favorite Companies</Text>
+  
+        {favorites.length === 0 ? (
+          <Text style={styles.empty}>You don't have any favorites yet.</Text>
+        ) : (
+          <FlatList
+            data={favorites}
+            keyExtractor={(item) => `${item.domain}-${item.userId}`}
+            renderItem={({ item }) => (
+              <View style={styles.listItemColumn}>
                 <Text style={styles.domain}>{item.domain}</Text>
                 <Pressable onPress={() => handleRemove(item.domain, item.userId)}>
-                  <Text style={styles.remove}>❌ Remove</Text>
+                <Text style={styles.remove}>❌ Remove</Text>
                 </Pressable>
               </View>
-            </View>
-          )}
-          
-
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
-        />
-      )}
+            )}
+            ItemSeparatorComponent={() => <View style={styles.separator} />}
+            style={{ width: "100%" }}
+          />
+        )}
+      </View>
     </View>
   );
+  
 };
 
 export default CompanyManageScreen;
 
 const styles = StyleSheet.create({
-  container: {
+  outer: {
     flex: 1,
-    padding: 16,
-    backgroundColor: '#ffffff',
-  },
+    backgroundColor: "#007aff",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },  
   center: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   title: {
-    fontSize: 22,
-    fontWeight: '600',
+    fontSize: 24,
+    fontWeight: "bold",
     marginBottom: 16,
-  },
+    textAlign: "center",
+  },  
   card: {
-    backgroundColor: '#f2f2f2',
-    padding: 16,
-    borderRadius: 8,
-  },
+    flex: 1,
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 20,
+    width: "100%",
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 10,
+  },  
   domain: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '500',
   },
   remove: {
     color: 'red',
     marginTop: 10,
-    fontWeight: '600',
+    fontWeight: '300',
   },
   separator: {
     height: 12,
@@ -154,9 +162,11 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 16,
   },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
+  listItemColumn: {
+    backgroundColor: "#f2f2f2",
+    borderRadius: 10,
+    padding: 16,
+    marginBottom: 12,
+    alignItems: "flex-start",
+  },  
 });

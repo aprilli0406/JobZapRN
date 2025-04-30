@@ -40,6 +40,7 @@ export type RootStackParamList = {
 const Stack = createStackNavigator<RootStackParamList>();
 
 export default function App() {
+  console.log("🧭 Screens registered:");
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -52,7 +53,7 @@ export default function App() {
         <Stack.Screen name="UserManage" component={UserManageScreen} />
         
       </Stack.Navigator>
-      console.log("🧭 Screens registered:");
+
 
     </NavigationContainer>
   );

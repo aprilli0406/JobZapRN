@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { View, Text, TextInput, Button, Alert, StyleSheet } from "react-native";
+import { View, Text, TextInput, Button, Alert, StyleSheet, TouchableOpacity } from "react-native";
 import { signUp, signIn } from "@aws-amplify/auth";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack"; // ✅ Import this!
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import LinearGradient from 'react-native-linear-gradient';
 
 
 type RootStackParamList = {
@@ -68,24 +68,121 @@ type RootStackParamList = {
     };
   
     return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Sign Up</Text>
-  
-        <TextInput placeholder="First Name" style={styles.input} onChangeText={setFirstName} />
-        <TextInput placeholder="Last Name" style={styles.input} onChangeText={setLastName} />
-        <TextInput placeholder="Email" style={styles.input} onChangeText={setEmail} />
-        <TextInput placeholder="Password" style={styles.input} secureTextEntry onChangeText={setPassword} />
-        <TextInput placeholder="Confirm Password" style={styles.input} secureTextEntry onChangeText={setConfirmPassword} />
-  
-        <Button title={loading ? "Signing Up..." : "Sign Up"} onPress={handleSignUp} disabled={loading} />
-      </View>
+      <View style={styles.outer}>
+  <View style={styles.card}>
+    <Text style={styles.title}>Sign Up</Text>
+
+    <TextInput
+  style={styles.input}
+  placeholder="First Name"
+  placeholderTextColor="#888" // light gray label
+  onChangeText={setFirstName}
+  value={firstName}
+  selectionColor="#000"
+  underlineColorAndroid="transparent"
+/>
+
+<TextInput
+  style={styles.input}
+  placeholder="Last Name"
+  placeholderTextColor="#888"
+  onChangeText={setLastName}
+  value={lastName}
+  selectionColor="#000"
+  underlineColorAndroid="transparent"
+/>
+
+<TextInput
+  style={styles.input}
+  placeholder="Email"
+  placeholderTextColor="#888"
+  onChangeText={setEmail}
+  value={email}
+  selectionColor="#000"
+  underlineColorAndroid="transparent"
+/>
+
+<TextInput
+  style={styles.input}
+  placeholder="Password"
+  placeholderTextColor="#888"
+  secureTextEntry
+  onChangeText={setPassword}
+  value={password}
+  selectionColor="#000"
+  underlineColorAndroid="transparent"
+/>
+
+<TextInput
+  style={styles.input}
+  placeholder="Confirm Password"
+  placeholderTextColor="#888"
+  secureTextEntry
+  onChangeText={setConfirmPassword}
+  value={confirmPassword}
+  selectionColor="#000"
+  underlineColorAndroid="transparent"
+/>
+
+
+    <TouchableOpacity onPress={handleSignUp} activeOpacity={0.8} style={{ width: "90%" }}>
+      <LinearGradient colors={["#007aff", "#00c6ff"]} style={styles.signupBtn}>
+        <Text style={styles.signupBtnText}>SIGN UP</Text>
+      </LinearGradient>
+    </TouchableOpacity>
+  </View>
+</View>
+
     );
   };
   
   const styles = StyleSheet.create({
-    container: { flex: 1, justifyContent: "center", padding: 20 },
-    title: { fontSize: 24, fontWeight: "bold", marginBottom: 20, textAlign: "center" },
-    input: { borderWidth: 1, borderColor: "#ccc", padding: 10, marginBottom: 10, borderRadius: 5 },
+    outer: {
+      flex: 1,
+      backgroundColor: "#007aff",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    card: {
+      backgroundColor: "#fff",
+      padding: 30,
+      borderRadius: 20,
+      width: "85%",
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOpacity: 0.2,
+      shadowRadius: 10,
+      elevation: 10,
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: "bold",
+      marginBottom: 25,
+    },
+    input: {
+      width: "100%",
+      borderWidth: 1,
+      borderColor: "#ddd",
+      padding: 12,
+      borderRadius: 10,
+      marginBottom: 15,
+      backgroundColor: "#f5f5f5",
+      fontSize: 16,
+      color: "#000", 
+    },
+    signupBtn: {
+      padding: 12,
+      borderRadius: 30,
+      alignItems: "center",
+      alignSelf: "center",
+      marginTop: 10,
+    },
+    signupBtnText: {
+      color: "white",
+      fontWeight: "bold",
+      fontSize: 16,
+    },
   });
   
+ 
   export default SignUpScreen;

@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, Alert, StyleSheet, TouchableOpacity } fr
 import { signIn, SignInInput } from "@aws-amplify/auth";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import LinearGradient from 'react-native-linear-gradient';
 
 import { signOut } from 'aws-amplify/auth';
 
@@ -85,37 +86,140 @@ async function handleTestLogin() {
 
 
 
-
-
-
-return (
-  <View style={styles.container}>
+  return (
+    <View style={styles.outer}>
+  <View style={styles.card}>
     <Text style={styles.title}>Login</Text>
 
-    {/* ✅ Input Fields */}
-    <TextInput style={styles.input} placeholder="Email" onChangeText={setEmail} />
-    <TextInput style={styles.input} placeholder="Password" secureTextEntry onChangeText={setPassword} />
+    <TextInput
+  style={styles.input}
+  placeholder="Email"
+  placeholderTextColor="#888"
+  onChangeText={setEmail}
+  value={email}
+  selectionColor="#000"
+  underlineColorAndroid="transparent"
+  />
 
-  {/* Login Button */}
-  <Button title="Login" onPress={handleSignin} />
+<TextInput
+  style={styles.input}
+  placeholder="Password"
+  placeholderTextColor="#888"
+  secureTextEntry
+  onChangeText={setPassword}
+  value={password}
+  selectionColor="#000"
+  underlineColorAndroid="transparent"
+/>
 
-  {/* Test Login Button */}
-  <Button title="Test Login" onPress={handleTestLogin} />
 
-  {/* Sign-Up Button  */}
-    <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-      <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
+
+<TouchableOpacity onPress={handleSignin} activeOpacity={0.8} style={{ width: "90%" }}>
+  <LinearGradient
+    colors={["#dc2424", "#4a569d"]}
+    style={styles.loginBtn} >
+    <Text style={styles.loginBtnText}>LOGIN</Text>
+  </LinearGradient>
+</TouchableOpacity>
+
+
+<TouchableOpacity onPress={() => navigation.navigate("SignUp")} activeOpacity={0.8} style={{ width: "90%" }}>
+  <LinearGradient
+    colors={["#24c6dc", "#514a9d"]}
+    style={styles.signupBtn}
+  >
+    <Text style={styles.signupBtnText}>Sign Up</Text>
+  </LinearGradient>
+</TouchableOpacity>
+
+
+
+<TouchableOpacity onPress={handleTestLogin} style={styles.testBtn}>
+      <Text style={styles.testBtnText}>TEST LOGIN</Text>
     </TouchableOpacity>
+
+
   </View>
-);
+</View>
+
+  );
 };
 
-// ✅ Improved Styling for Correct Button Placement
 const styles = StyleSheet.create({
-container: { flex: 1, justifyContent: "center", alignItems: "center", padding: 20 },
-title: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 },
-input: { width: "100%", borderWidth: 1, borderColor: "#ccc", padding: 10, marginBottom: 10, borderRadius: 5 },
-signupText: { textAlign: "center", marginTop: 15, color: "blue", fontSize: 16, fontWeight: "bold" },
+  outer: {
+    flex: 1,
+    backgroundColor: "#007aff",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  card: {
+    backgroundColor: "#fff",
+    padding: 30,
+    borderRadius: 20,
+    width: "85%",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 10,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 25,
+  },
+  input: {
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "#ddd",
+    padding: 12,
+    borderRadius: 10,
+    marginBottom: 15,
+    backgroundColor: "#f5f5f5",
+    fontSize: 16,
+    color: "#000", // 👈 this line
+  },
+  loginBtn: {
+    padding: 12,
+    borderRadius: 30,
+    alignItems: "center",
+    marginTop: 10,
+    alignSelf: "center",
+  },
+  loginBtnText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  testBtn: {
+    width: "100%",
+    padding: 12,
+    borderRadius: 30,
+    backgroundColor: "black",
+    alignItems: "center",
+    marginTop: 10,
+  },
+  testBtnText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  signupBtn: {
+    padding: 12,
+    borderRadius: 30,
+    alignItems: "center",
+    marginTop: 10,
+    alignSelf: "center",
+  },
+  signupBtnText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  
+  
 });
+
+
 export default LoginScreen;
 
