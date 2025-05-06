@@ -2,7 +2,7 @@ import React from "react";
 import { SafeAreaView } from "react-native";
 import { Amplify } from "aws-amplify";
 import awsExports from "./src/aws-exports"; // Ensure the file exists
-import AsyncStorage from "@react-native-async-storage/async-storage"; // ✅ Import AsyncStorage
+import AsyncStorage from "@react-native-async-storage/async-storage"; // Import AsyncStorage
 
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -15,6 +15,7 @@ import SearchScreen from "./src/search_page";
 import CompanyInfoScreen from "./src/companyInfo"//React components must start with a capital letter, and so should their imports.
 import CompanyManageScreen from "./src/fav-company_manage"
 import UserManageScreen from  "./src/user_manage"
+import EditUserInfoScreen from "./src/editUserInfo"
 
 Amplify.configure({
   ...awsExports,
@@ -34,6 +35,7 @@ export type RootStackParamList = {
   };
   CompanyManage: undefined;
   UserManage: undefined;
+  EditUserInfo: { userInfo: any };
 };
 
 // Create the Stack Navigator
@@ -51,6 +53,7 @@ export default function App() {
         <Stack.Screen name="CompanyInfo" component={CompanyInfoScreen} />
         <Stack.Screen name="CompanyManage" component={CompanyManageScreen} />
         <Stack.Screen name="UserManage" component={UserManageScreen} />
+        <Stack.Screen name="EditUserInfo" component={EditUserInfoScreen} />
         
       </Stack.Navigator>
 
