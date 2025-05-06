@@ -15,8 +15,6 @@ type Job = {
   job_city: string;
   job_apply_link: string;
 };
-type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, "Login">;
-
 
 type CompanyInfoNavigationProp = StackNavigationProp<RootStackParamList, 'CompanyInfo'>;
 type CompanyInfoRouteProp = RouteProp<RootStackParamList, 'CompanyInfo'>;

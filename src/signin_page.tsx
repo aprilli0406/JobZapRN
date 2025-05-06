@@ -56,7 +56,7 @@ async function handleTestLogin() {
     await signOut({ global: true }); // Make sure user is signed out
 
     const { isSignedIn, nextStep } = await signIn({
-      username: "tt09@gmail.com",
+      username: "tt17@gmail.com",
       password: "Lyy2345@",
       options: {
         authFlowType: "USER_PASSWORD_AUTH"
