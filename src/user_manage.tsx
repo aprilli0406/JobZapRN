@@ -12,6 +12,8 @@ import { useNavigation } from '@react-navigation/native';
 import { fetchAuthSession } from 'aws-amplify/auth';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App'; // Adjust if needed
+import { TouchableOpacity } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'UserManage'>;
 
@@ -84,10 +86,22 @@ const UserManagement = () => {
           <Text style={styles.item}>Status: {userInfo.myStatus || 'N/A'}</Text>
 
           <View style={styles.buttonContainer}>
-            <Button
-              title="Edit"
-              onPress={() => navigation.navigate('EditUserInfo', { userInfo })}
-            />
+          
+         <TouchableOpacity
+  onPress={() => navigation.navigate('EditUserInfo', { userInfo })}
+  activeOpacity={0.8}
+  style={{ alignSelf: 'center', marginTop: 20 }} // center + spacing
+>
+  <LinearGradient
+    colors={['#12c2e9', '#c471ed', '#f64f59']}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
+    style={styles.manageBtn} // ✅ same as Manage My Account
+  >
+    <Text style={styles.manageBtnText}>Edit</Text>
+  </LinearGradient>
+</TouchableOpacity>
+
           </View>
         </>
       ) : (
@@ -99,15 +113,65 @@ const UserManagement = () => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    flexGrow: 1,
+    backgroundColor: '#0e89ec',
+    padding: 24,
   },
   item: {
-    fontSize: 16,
-    marginVertical: 8,
+    fontSize: 18,
+    color: '#333',
+    backgroundColor: '#fff',
+    padding: 12,
+    marginBottom: 12,
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 1 },
+    elevation: 2,
   },
   buttonContainer: {
     marginTop: 20,
+    alignItems: 'center',
   },
+  editButton: {
+    width: 150,// custom width (adjust as needed)
+    backgroundColor: '#fff',
+    paddingVertical: 12,
+    paddingHorizontal: 40,
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
+  },
+  editButtonText: {
+    color: '#007AFF',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  loginBtn: {
+  width: "100%",
+  paddingVertical: 14,
+  borderRadius: 4, // squared
+  alignItems: "center",
+  marginTop: 10,
+},
+loginBtnText: {
+  color: "white",
+  fontWeight: "bold",
+  fontSize: 16,
+},
+manageBtn: {
+  width: 220,
+  paddingVertical: 14,
+  borderRadius: 4,
+  alignItems: "center",
+},
+manageBtnText: {
+  color: "white",
+  fontWeight: "bold",
+  fontSize: 16,
+},
 });
 
 export default UserManagement;

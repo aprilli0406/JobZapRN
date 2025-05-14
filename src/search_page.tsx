@@ -72,11 +72,21 @@ const SearchScreen = () => {
         />
       </View>
 
-      <TouchableOpacity onPress={() => navigation.navigate('UserManage')} activeOpacity={0.8} style={{ width: "90%", marginTop: 40 }}>
-          <LinearGradient colors={["#007aff", "#00c6ff"]} style={styles.manageBtn}>
-            <Text style={styles.manageBtnText}>Manage My Account</Text>
-          </LinearGradient>
-        </TouchableOpacity>
+     <TouchableOpacity
+  onPress={() => navigation.navigate('UserManage')}
+  activeOpacity={0.8}
+  style={{ alignSelf: 'center', marginTop: 40 }}
+>
+  <LinearGradient
+    colors={['#12c2e9', '#c471ed', '#f64f59']}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
+    style={styles.manageBtn}
+  >
+    <Text style={styles.loginBtnText}>Manage My Account</Text>
+  </LinearGradient>
+</TouchableOpacity>
+
     </View>
   );
 };
@@ -84,7 +94,7 @@ const SearchScreen = () => {
 const styles = StyleSheet.create({
   outer: {
     flex: 1,
-    backgroundColor: "#007aff",
+    backgroundColor: "#0e89ec",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -135,16 +145,31 @@ const styles = StyleSheet.create({
     color: "#555",
     marginTop: 10,
   },
-  manageBtn: {
-    padding: 12,
-    borderRadius: 30,
-    alignItems: "center",
-  },
+manageBtn: {
+  width: 240, // ✅ custom width (adjust as needed)
+  paddingVertical: 14,
+  borderRadius: 4, // ✅ same square shape
+  alignItems: "center",
+},
   manageBtnText: {
     color: "white",
     fontWeight: "bold",
     fontSize: 16,
-  },
+     borderRadius: 6, 
+    },
+  loginBtn: {
+  padding: 12,
+  borderRadius: 6,
+  alignItems: "center",
+  marginTop: 10,
+  width: "100%", // already added earlier
+},
+loginBtnText: {
+  color: "white",
+  fontWeight: "bold",
+  fontSize: 16,
+},
+
 });
 
 export default SearchScreen;

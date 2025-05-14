@@ -8,6 +8,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import { signOut } from 'aws-amplify/auth';
 
 import { RootStackParamList } from "../App";
+import Icon from 'react-native-vector-icons/Feather';
+
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, "Login">;
 
@@ -30,7 +32,7 @@ const LoginScreen = () => {
               authFlowType: 'USER_PASSWORD_AUTH'
           }
       });
-      Alert.alert("Log In Successfully!");
+      Alert.alert("Log in Successful!");
       console.log('isSignedIn', isSignedIn);
       console.log('nextStep', nextStep);
 
@@ -83,62 +85,58 @@ async function handleTestLogin() {
   }
 }
 
-
-
-
   return (
     <View style={styles.outer}>
   <View style={styles.card}>
     <Text style={styles.title}>Login</Text>
 
-    <TextInput
-  style={styles.input}
-  placeholder="Email"
-  placeholderTextColor="#888"
-  onChangeText={setEmail}
-  value={email}
-  selectionColor="#000"
-  underlineColorAndroid="transparent"
+    <View style={styles.inputContainer}>
+  <Icon name="mail" size={20} color="#888" style={styles.icon} />
+  <TextInput
+    style={styles.input}
+    placeholder="Email"
+    placeholderTextColor="#888"
+    onChangeText={setEmail}
+    value={email}
+    selectionColor="#000"
+    underlineColorAndroid="transparent"
   />
+</View>
 
-<TextInput
-  style={styles.input}
-  placeholder="Password"
-  placeholderTextColor="#888"
-  secureTextEntry
-  onChangeText={setPassword}
-  value={password}
-  selectionColor="#000"
-  underlineColorAndroid="transparent"
-/>
-
-
+<View style={styles.inputContainer}>
+  <Icon name="lock" size={20} color="#888" style={styles.icon} />
+  <TextInput
+    style={styles.input}
+    placeholder="Password"
+    placeholderTextColor="#888"
+    secureTextEntry
+    onChangeText={setPassword}
+    value={password}
+    selectionColor="#000"
+    underlineColorAndroid="transparent"
+  />
+</View>
 
 <TouchableOpacity onPress={handleSignin} activeOpacity={0.8} style={{ width: "90%" }}>
   <LinearGradient
-    colors={["#dc2424", "#4a569d"]}
-    style={styles.loginBtn} >
-    <Text style={styles.loginBtnText}>LOGIN</Text>
+     colors={["#12c2e9", "#c471ed", "#f64f59"]}
+  start={{ x: 0, y: 0 }}
+  end={{ x: 1, y: 0 }}
+  style={styles.loginBtn}>
+   <Text style={styles.loginBtnText}>Login</Text>
   </LinearGradient>
 </TouchableOpacity>
 
 
 <TouchableOpacity onPress={() => navigation.navigate("SignUp")} activeOpacity={0.8} style={{ width: "90%" }}>
   <LinearGradient
-    colors={["#24c6dc", "#514a9d"]}
-    style={styles.signupBtn}
-  >
+   colors={["#12c2e9", "#c471ed", "#f64f59"]}
+  start={{ x: 0, y: 0 }}
+  end={{ x: 1, y: 0 }}
+  style={styles.loginBtn}>
     <Text style={styles.signupBtnText}>Sign Up</Text>
   </LinearGradient>
 </TouchableOpacity>
-
-
-
-<TouchableOpacity onPress={handleTestLogin} style={styles.testBtn}>
-      <Text style={styles.testBtnText}>TEST LOGIN</Text>
-    </TouchableOpacity>
-
-
   </View>
 </View>
 
@@ -148,78 +146,76 @@ async function handleTestLogin() {
 const styles = StyleSheet.create({
   outer: {
     flex: 1,
-    backgroundColor: "#007aff",
+    backgroundColor: "#0e89ec",
     justifyContent: "center",
     alignItems: "center",
   },
   card: {
     backgroundColor: "#fff",
     padding: 30,
-    borderRadius: 20,
+    borderRadius: 12, // was 20
     width: "85%",
     alignItems: "center",
     shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    elevation: 10,
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 6,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 25,
+    marginBottom: 20, // a little tighter spacing
   },
   input: {
     width: "100%",
     borderWidth: 1,
     borderColor: "#ddd",
-    padding: 12,
-    borderRadius: 10,
-    marginBottom: 15,
-    backgroundColor: "#f5f5f5",
+    padding: 14,
+    borderRadius: 6, // was 10, less rounded
+    marginBottom: 16,
+    backgroundColor: "#f8f8f8",
     fontSize: 16,
-    color: "#000", // 👈 this line
+    color: "#000",
   },
   loginBtn: {
-    padding: 12,
-    borderRadius: 30,
+    paddingVertical: 14,
+    borderRadius:4,
     alignItems: "center",
     marginTop: 10,
-    alignSelf: "center",
+    width: "100%",
   },
   loginBtnText: {
     color: "white",
     fontWeight: "bold",
     fontSize: 16,
   },
-  testBtn: {
-    width: "100%",
-    padding: 12,
-    borderRadius: 30,
-    backgroundColor: "black",
-    alignItems: "center",
-    marginTop: 10,
-  },
-  testBtnText: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
   signupBtn: {
-    padding: 12,
-    borderRadius: 30,
+    paddingVertical: 14,
+    borderRadius: 4,//same as login
     alignItems: "center",
     marginTop: 10,
-    alignSelf: "center",
+    width: "100%",
   },
   signupBtnText: {
     color: "white",
     fontWeight: "bold",
     fontSize: 16,
   },
-  
-  
+  inputContainer: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  borderWidth: 1,
+  borderColor: '#ddd',
+  borderRadius: 6,
+  paddingHorizontal: 12,
+  backgroundColor: '#f8f8f8',
+  marginBottom: 16,
+},
+icon: {
+  marginRight: 8,
+},
 });
-
+ 
 
 export default LoginScreen;
 
