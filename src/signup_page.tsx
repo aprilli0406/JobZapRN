@@ -126,16 +126,9 @@ type RootStackParamList = {
     <TouchableOpacity
   onPress={() => navigation.navigate("SignUp")}
   activeOpacity={0.8}
-  style={{ width: '100%', marginTop: 12 }}
+  style={styles.loginBtnSolid}
 >
-  <LinearGradient
-    colors={['#12c2e9', '#c471ed', '#f64f59']}
-    start={{ x: 0, y: 0 }}
-    end={{ x: 1, y: 0 }}
-    style={styles.loginBtn} // ✅ reuse the same button style
-  >
-    <Text style={styles.loginBtnText}>Sign Up</Text>
-  </LinearGradient>
+  <Text style={styles.loginBtnText}>Sign Up</Text>
 </TouchableOpacity>
 
   </View>
@@ -202,6 +195,15 @@ loginBtnText: {
   fontWeight: "bold",
   fontSize: 16,
 },
+loginBtnSolid: {
+  backgroundColor: '#0059a9',
+  paddingVertical: 14,
+  borderRadius: 4,
+  alignItems: 'center',
+  width: '95%',
+  marginTop: 12,
+},
+
   });
   
  
