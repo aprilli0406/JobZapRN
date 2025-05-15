@@ -73,42 +73,49 @@ const UserManagement = () => {
   if (loading) return <ActivityIndicator size="large" color="#0000ff" />;
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+  <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.card}>
+      <Text style={styles.title}>Manage My Account</Text>
+
       {userInfo ? (
         <>
-          
-          <Text style={styles.item}>First Name: {userInfo.firstName || 'N/A'}</Text>
-          <Text style={styles.item}>Last Name: {userInfo.lastName || 'N/A'}</Text>
-          <Text style={styles.item}>Email: {userInfo.email || 'N/A'}</Text>
-          <Text style={styles.item}>Phone: {userInfo.phoneNumber || 'N/A'}</Text>
-          <Text style={styles.item}>Location: {userInfo.location || 'N/A'}</Text>
-          <Text style={styles.item}>Job Type: {userInfo.jobType || 'N/A'}</Text>
-          <Text style={styles.item}>Status: {userInfo.myStatus || 'N/A'}</Text>
+          {[
+            { label: 'First Name', value: userInfo.firstName },
+            { label: 'Last Name', value: userInfo.lastName },
+            { label: 'Email', value: userInfo.email },
+            { label: 'Phone', value: userInfo.phoneNumber },
+            { label: 'Location', value: userInfo.location },
+            { label: 'Job Type', value: userInfo.jobType },
+            { label: 'Status', value: userInfo.myStatus },
+          ].map(({ label, value }) => (
+            <View style={styles.infoBox} key={label}>
+              <Text style={styles.infoText}>
+                {label}: {value || 'N/A'}
+              </Text>
+            </View>
+          ))}
 
-          <View style={styles.buttonContainer}>
-          
-         <TouchableOpacity
-  onPress={() => navigation.navigate('EditUserInfo', { userInfo })}
-  activeOpacity={0.8}
-  style={{ alignSelf: 'center', marginTop: 20 }} // center + spacing
->
-  <LinearGradient
-    colors={['#12c2e9', '#c471ed', '#f64f59']}
-    start={{ x: 0, y: 0 }}
-    end={{ x: 1, y: 0 }}
-    style={styles.manageBtn} // ✅ same as Manage My Account
-  >
-    <Text style={styles.manageBtnText}>Edit</Text>
-  </LinearGradient>
-</TouchableOpacity>
-
-          </View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('EditUserInfo', { userInfo })}
+            activeOpacity={0.8}
+            style={{ alignSelf: 'center', marginTop: 20 }}
+          >
+            <LinearGradient
+              colors={['#12c2e9', '#c471ed', '#f64f59']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.manageBtn}
+            >
+              <Text style={styles.manageBtnText}>Edit</Text>
+            </LinearGradient>
+          </TouchableOpacity>
         </>
       ) : (
-        <Text>No user data found.</Text>
+        <Text style={styles.empty}>No user data found.</Text>
       )}
-    </ScrollView>
-  );
+    </View>
+  </ScrollView>
+);
 };
 
 const styles = StyleSheet.create({
@@ -171,6 +178,43 @@ manageBtnText: {
   color: "white",
   fontWeight: "bold",
   fontSize: 16,
+},
+card: {
+  backgroundColor: '#fff',
+  padding: 20,
+  borderRadius: 12,
+  width: '100%',
+  shadowColor: '#000',
+  shadowOpacity: 0.1,
+  shadowRadius: 6,
+  elevation: 6,
+},
+infoBox: {
+  backgroundColor: '#fdfdfd',
+  borderRadius: 6,
+  paddingVertical: 12,
+  paddingHorizontal: 16,
+  borderWidth: 1,
+  borderColor: '#ccc',
+  marginBottom: 12,
+  width: '100%',
+},
+infoText: {
+  fontSize: 16,
+  color: '#333',
+},
+empty: {
+  marginTop: 32,
+  textAlign: 'center',
+  fontSize: 16,
+  color: '#666',
+},
+title: {
+  fontSize: 24,
+  fontWeight: 'bold',
+  marginBottom: 20,
+  color: '#333',
+  textAlign: 'center',
 },
 });
 

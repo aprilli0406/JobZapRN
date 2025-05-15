@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { ScrollView } from 'react-native';
 import {
   View,
   Text,
@@ -79,94 +80,86 @@ const CompanyManageScreen = () => {
     );
   }
 
-  return (
-    <View style={styles.outer}>
-      <View style={styles.card}>
-        <Text style={styles.title}>My Favorite Companies</Text>
-  
-        {favorites.length === 0 ? (
-          <Text style={styles.empty}>You don't have any favorites yet.</Text>
-        ) : (
-          <FlatList
-            data={favorites}
-            keyExtractor={(item) => `${item.domain}-${item.userId}`}
-            renderItem={({ item }) => (
-              <View style={styles.listItemColumn}>
-                <Text style={styles.domain}>{item.domain}</Text>
-                <Pressable onPress={() => handleRemove(item.domain, item.userId)}>
-                <Text style={styles.remove}>❌ Remove</Text>
-                </Pressable>
-              </View>
-            )}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
-            style={{ width: "100%" }}
-          />
-        )}
-      </View>
+ return (
+  <ScrollView contentContainerStyle={styles.outer}>
+    <View style={styles.card}>
+      <Text style={styles.title}>My Favorite Companies</Text>
+
+      {favorites.length === 0 ? (
+        <Text style={styles.empty}>You don't have any favorites yet.</Text>
+      ) : (
+        favorites.map((item) => (
+          <View key={`${item.domain}-${item.userId}`} style={styles.inputGroup}>
+            <Text style={styles.label}>{item.domain}</Text>
+            <Pressable onPress={() => handleRemove(item.domain, item.userId)}>
+              <Text style={styles.remove}>Remove</Text>
+            </Pressable>
+          </View>
+        ))
+      )}
     </View>
-  );
-  
+  </ScrollView>
+);
+
 };
 
 export default CompanyManageScreen;
 
 const styles = StyleSheet.create({
   outer: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: "#007aff",
-    justifyContent: "center",
     alignItems: "center",
     padding: 20,
-  },  
-  center: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  },
+  card: {
+    backgroundColor: "#fff",
+    padding: 25,
+    borderRadius: 12,
+    width: "100%",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 6,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 16,
-    textAlign: "center",
-  },  
-  card: {
-    flex: 1,
-    backgroundColor: "#fff",
-    padding: 20,
-    borderRadius: 20,
+    marginBottom: 20,
+  },
+  inputGroup: {
     width: "100%",
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    elevation: 10,
-  },  
-  domain: {
-    fontSize: 18,
-    fontWeight: '500',
+    marginBottom: 15,
+    padding: 10,
+    backgroundColor: "#f8f8f8",
+    borderRadius: 6,
+  },
+  label: {
+    fontWeight: "500",
+    fontSize: 16,
+    color: "#333",
+    marginBottom: 4,
   },
   remove: {
-    color: 'red',
-    marginTop: 10,
-    fontWeight: '300',
-  },
-  separator: {
-    height: 12,
+    fontSize: 14,
+    color: "#dc3545",
+    fontWeight: "bold",
   },
   empty: {
     marginTop: 32,
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 16,
-    color: '#666',
+    color: "#666",
   },
-  error: {
-    color: 'red',
-    fontSize: 16,
-  },
-  listItemColumn: {
-    backgroundColor: "#f2f2f2",
-    borderRadius: 10,
-    padding: 16,
-    marginBottom: 12,
-    alignItems: "flex-start",
-  },  
+  center: {
+  flex: 1,
+  justifyContent: "center",
+  alignItems: "center",
+},
+error: {
+  color: 'red',
+  fontSize: 16,
+},
 });
+

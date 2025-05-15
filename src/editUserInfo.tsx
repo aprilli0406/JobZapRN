@@ -55,30 +55,30 @@ const EditUserInfoScreen = ({ route, navigation }: Props) => {
   };
 
  return (
- <ScrollView contentContainerStyle={styles.container} style={{ backgroundColor: '#0e89ec' }}>
+  <ScrollView contentContainerStyle={styles.outer}>
     <View style={styles.card}>
       <Text style={styles.title}>Edit User Info</Text>
 
       {[
-  { key: 'firstName', label: 'First Name' },
-  { key: 'lastName', label: 'Last Name' },
-  { key: 'email', label: 'Email' },
-  { key: 'phoneNumber', label: 'Phone Number' },
-  { key: 'location', label: 'Location' },
-  { key: 'jobType', label: 'Job Type' },
-  { key: 'myStatus', label: 'Status' },
-].map(({ key, label }) => (
-  <View key={key} style={styles.inputGroup}>
-    <Text style={styles.label}>{label}</Text>
-    <TextInput
-      style={styles.input}
-      value={formData[key] || ''}
-      onChangeText={(text) => handleChange(key, text)}
-      placeholder={`Enter ${label}`}
-      placeholderTextColor="#888"
-    />
-  </View>
-))}
+        { key: 'firstName', label: 'First Name' },
+        { key: 'lastName', label: 'Last Name' },
+        { key: 'email', label: 'Email' },
+        { key: 'phoneNumber', label: 'Phone Number' },
+        { key: 'location', label: 'Location' },
+        { key: 'jobType', label: 'Job Type' },
+        { key: 'myStatus', label: 'Status' },
+      ].map(({ key, label }) => (
+        <View key={key} style={styles.inputGroup}>
+          <Text style={styles.label}>{label}</Text>
+          <TextInput
+            style={styles.input}
+            value={formData[key] || ''}
+            onChangeText={(text) => handleChange(key, text)}
+            placeholder={`Enter ${label}`}
+            placeholderTextColor="#888"
+          />
+        </View>
+      ))}
 
       <View style={styles.inputGroup}>
         <Text style={styles.label}>Notification Status</Text>
@@ -88,7 +88,11 @@ const EditUserInfoScreen = ({ route, navigation }: Props) => {
         />
       </View>
 
-      <TouchableOpacity onPress={handleSave} activeOpacity={0.8} style={{ width: '100%', marginTop: 20 }}>
+      <TouchableOpacity
+        onPress={handleSave}
+        activeOpacity={0.8}
+        style={{ width: '100%', marginTop: 20 }}
+      >
         <LinearGradient
           colors={['#12c2e9', '#c471ed', '#f64f59']}
           start={{ x: 0, y: 0 }}
@@ -104,67 +108,58 @@ const EditUserInfoScreen = ({ route, navigation }: Props) => {
 };
 
 const styles = StyleSheet.create({
- container: {
-  paddingTop: 40,
-  paddingBottom: 40,
-  flexGrow: 1,
-  width: "100%", // fills ScrollView
-  alignItems: "stretch", // allows card to stretch too
-},
   outer: {
-  flex: 1,
-  backgroundColor: "#0e89ec",
-  justifyContent: "center",
-  alignItems: "center",
-},
-card: {
-  backgroundColor: "#fff",
-  paddingVertical: 30,
-  paddingHorizontal: 20, // smaller side padding
-  borderRadius: 12,
-  width: "90%",
-  alignItems: "center",
-  shadowColor: "#000",
-  shadowOpacity: 0.1,
-  shadowRadius: 6,
-  elevation: 6,
-},
-title: {
-  fontSize: 24,
-  fontWeight: "bold",
-  marginBottom: 20,
-},
-input: {
-  width: "100%",
-  borderWidth: 1,
-  borderColor: "#ccc",
-  padding: 14,
-  borderRadius: 6,
-  marginBottom: 16,
-  backgroundColor: "#f8f8f8",
-  fontSize: 16,
-  color: "#000",
-},
-saveButton: {
-  paddingVertical: 14,
-  borderRadius: 4,
-  alignItems: "center",
-  width: "100%",
-},
-saveButtonText: {
-  color: "white",
-  fontWeight: "bold",
-  fontSize: 16,
-},
-inputGroup: {
-  width: "100%",
-  marginBottom: 16,
-},
-label: {
-  alignSelf: "flex-start",
-  fontWeight: "bold",
-  marginBottom: 6,
-}
+    flexGrow: 1,
+    backgroundColor: "#0e89ec",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 40,
+    paddingHorizontal: 20,
+  },
+  card: {
+    backgroundColor: "#fff",
+    padding: 24,
+    borderRadius: 12,
+    width: "100%",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  inputGroup: {
+    marginBottom: 16,
+  },
+  label: {
+    fontWeight: "bold",
+    marginBottom: 6,
+  },
+  input: {
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 14,
+    borderRadius: 6,
+    backgroundColor: "#f8f8f8",
+    fontSize: 16,
+    color: "#000",
+  },
+  saveButton: {
+    paddingVertical: 14,
+    borderRadius: 4,
+    alignItems: "center",
+    width: "100%",
+  },
+  saveButtonText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
 });
 
 export default EditUserInfoScreen;
