@@ -75,16 +75,9 @@ const SearchScreen = () => {
      <TouchableOpacity
   onPress={() => navigation.navigate('UserManage')}
   activeOpacity={0.8}
-  style={{ alignSelf: 'center', marginTop: 40 }}
+  style={styles.manageBtnSolid}
 >
-  <LinearGradient
-    colors={['#12c2e9', '#c471ed', '#f64f59']}
-    start={{ x: 0, y: 0 }}
-    end={{ x: 1, y: 0 }}
-    style={styles.manageBtn}
-  >
-    <Text style={styles.loginBtnText}>Manage My Account</Text>
-  </LinearGradient>
+  <Text style={styles.loginBtnText}>Manage My Account</Text>
 </TouchableOpacity>
 
     </View>
@@ -168,6 +161,14 @@ loginBtnText: {
   color: "white",
   fontWeight: "bold",
   fontSize: 16,
+},
+manageBtnSolid: {
+  backgroundColor: '#0059a9', // solid dark blue
+  paddingVertical: 14,
+  borderRadius: 4,
+  alignItems: 'center',
+  width: '70%',
+  marginTop: 40,
 },
 
 });

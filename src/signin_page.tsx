@@ -118,24 +118,17 @@ async function handleTestLogin() {
 </View>
 
 <TouchableOpacity onPress={handleSignin} activeOpacity={0.8} style={{ width: "90%" }}>
-  <LinearGradient
-     colors={["#12c2e9", "#c471ed", "#f64f59"]}
-  start={{ x: 0, y: 0 }}
-  end={{ x: 1, y: 0 }}
-  style={styles.loginBtn}>
-   <Text style={styles.loginBtnText}>Login</Text>
-  </LinearGradient>
+  <View style={styles.loginBtnSolid}>
+  <Text style={styles.loginBtnText}>Login</Text>
+</View>
+
 </TouchableOpacity>
 
 
 <TouchableOpacity onPress={() => navigation.navigate("SignUp")} activeOpacity={0.8} style={{ width: "90%" }}>
-  <LinearGradient
-   colors={["#12c2e9", "#c471ed", "#f64f59"]}
-  start={{ x: 0, y: 0 }}
-  end={{ x: 1, y: 0 }}
-  style={styles.loginBtn}>
-    <Text style={styles.signupBtnText}>Sign Up</Text>
-  </LinearGradient>
+  <View style={styles.signupBtnSolid}>
+  <Text style={styles.signupBtnText}>Sign Up</Text>
+</View>
 </TouchableOpacity>
   </View>
 </View>
@@ -214,6 +207,23 @@ const styles = StyleSheet.create({
 icon: {
   marginRight: 8,
 },
+loginBtnSolid: {
+  backgroundColor: '#0059a9', // solid dark blue
+  paddingVertical: 14,
+  borderRadius: 4,
+  alignItems: 'center',
+  width: '100%',
+  marginTop: 10,
+},
+signupBtnSolid: {
+  backgroundColor: '#0059a9',
+  paddingVertical: 14,
+  borderRadius: 4,
+  alignItems: 'center',
+  width: '100%',
+  marginTop: 10,
+},
+
 });
  
 

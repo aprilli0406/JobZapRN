@@ -75,7 +75,6 @@ const UserManagement = () => {
   return (
   <ScrollView contentContainerStyle={styles.container}>
     <View style={styles.card}>
-      <Text style={styles.title}>Manage My Account</Text>
 
       {userInfo ? (
         <>
@@ -96,19 +95,13 @@ const UserManagement = () => {
           ))}
 
           <TouchableOpacity
-            onPress={() => navigation.navigate('EditUserInfo', { userInfo })}
-            activeOpacity={0.8}
-            style={{ alignSelf: 'center', marginTop: 20 }}
-          >
-            <LinearGradient
-              colors={['#12c2e9', '#c471ed', '#f64f59']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={styles.manageBtn}
-            >
-              <Text style={styles.manageBtnText}>Edit</Text>
-            </LinearGradient>
-          </TouchableOpacity>
+  onPress={() => navigation.navigate('EditUserInfo', { userInfo })}
+  activeOpacity={0.8}
+  style={styles.manageBtnSolid}
+>
+  <Text style={styles.manageBtnText}>Edit</Text>
+</TouchableOpacity>
+
         </>
       ) : (
         <Text style={styles.empty}>No user data found.</Text>
@@ -216,6 +209,15 @@ title: {
   color: '#333',
   textAlign: 'center',
 },
+manageBtnSolid: {
+  backgroundColor: '#0059a9',
+  paddingVertical: 14,
+  borderRadius: 4,
+  alignItems: 'center',
+  width: '97%',
+  marginTop: 20,
+},
+
 });
 
 export default UserManagement;

@@ -89,19 +89,12 @@ const EditUserInfoScreen = ({ route, navigation }: Props) => {
       </View>
 
       <TouchableOpacity
-        onPress={handleSave}
-        activeOpacity={0.8}
-        style={{ width: '100%', marginTop: 20 }}
-      >
-        <LinearGradient
-          colors={['#12c2e9', '#c471ed', '#f64f59']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.saveButton}
-        >
-          <Text style={styles.saveButtonText}>Save</Text>
-        </LinearGradient>
-      </TouchableOpacity>
+  onPress={handleSave}
+  activeOpacity={0.8}
+  style={styles.saveButtonSolid}
+>
+  <Text style={styles.saveButtonText}>Save</Text>
+</TouchableOpacity>
     </View>
   </ScrollView>
 );
@@ -160,6 +153,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
+  saveButtonSolid: {
+  backgroundColor: '#0059a9',
+  paddingVertical: 14,
+  borderRadius: 4,
+  alignItems: 'center',
+  width: '100%',
+  marginTop: 20,
+},
+
 });
 
 export default EditUserInfoScreen;
